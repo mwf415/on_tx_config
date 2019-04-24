@@ -1,6 +1,6 @@
 package cn.onlov.tx.msg;
 
-import cn.onlov.tx.util.OnlovProperties;
+import cn.onlov.tx.util.TXConfigProperties;
 import com.github.qcloudsms.SmsSingleSender;
 import com.github.qcloudsms.SmsSingleSenderResult;
 import com.github.qcloudsms.httpclient.HTTPException;
@@ -22,8 +22,8 @@ public class MsgUtil {
     }
 
     private SmsSingleSender createSsender() {
-        String appid = OnlovProperties.msg_appid;
-        String appkey = OnlovProperties.msg_appkey;
+        String appid = TXConfigProperties.msg_appid;
+        String appkey = TXConfigProperties.msg_appkey;
         return  new SmsSingleSender(Integer.parseInt(appid), appkey);
     }
 
@@ -41,13 +41,13 @@ public class MsgUtil {
         int templateId = 0;
         switch (sendType){
             case  865 : //# 注册验证码
-                templateId = Integer.parseInt(OnlovProperties.msg_register_id.trim());
+                templateId = Integer.parseInt(TXConfigProperties.msg_register_id.trim());
                 break;
             case 866: // # 登陆验证码
-                templateId = Integer.parseInt(OnlovProperties.msg_login_id.trim());
+                templateId = Integer.parseInt(TXConfigProperties.msg_login_id.trim());
                 break;
             case 867: // # 修改登陆密码验证码
-                templateId = Integer.parseInt(OnlovProperties.msg_modifypw_id.trim());
+                templateId = Integer.parseInt(TXConfigProperties.msg_modifypw_id.trim());
                 break;
         }
         sendMsg(nationCode,phoneNumber,templateId,params);

@@ -1,7 +1,7 @@
 package cn.onlov.tx.oss;
 
 
-import cn.onlov.tx.util.OnlovProperties;
+import cn.onlov.tx.util.TXConfigProperties;
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.ClientConfig;
 import com.qcloud.cos.auth.BasicCOSCredentials;
@@ -28,8 +28,8 @@ public class OssUtil {
 
 
     private COSClient createCosClient() {
-        COSCredentials cred = new BasicCOSCredentials(OnlovProperties.oss_secretId, OnlovProperties.oss_secretKey);
-        ClientConfig clientConfig = new ClientConfig(new Region(OnlovProperties.oss_region));
+        COSCredentials cred = new BasicCOSCredentials(TXConfigProperties.oss_secretId, TXConfigProperties.oss_secretKey);
+        ClientConfig clientConfig = new ClientConfig(new Region(TXConfigProperties.oss_region));
         COSClient cosClientTemp = new COSClient(cred, clientConfig);
         return cosClientTemp;
     }
@@ -61,7 +61,7 @@ public class OssUtil {
 
     private static String updateOss(File localFile, String fileName){
         fileName = "home/upload/" + fileName;
-        PutObjectRequest putObjectRequest = new PutObjectRequest(OnlovProperties.oss_bucketName, fileName, localFile);
+        PutObjectRequest putObjectRequest = new PutObjectRequest(TXConfigProperties.oss_bucketName, fileName, localFile);
         // 设置存储类型：标准存储(Standard), 低频存储(Standard_IA)和归档存储(ARCHIVE)。默认是标准存储(Standard)
         putObjectRequest.setStorageClass(StorageClass.Standard_IA);
         try {
@@ -111,7 +111,7 @@ public class OssUtil {
     }
 
     public static InputStream downLoadOss(String key){
-        String bucketName = OnlovProperties.oss_bucketName;
+        String bucketName = TXConfigProperties.oss_bucketName;
         GetObjectRequest getObjectRequest = new GetObjectRequest(bucketName, key);
         COSObject downObjectMeta = cosClient.getObject(getObjectRequest);
         COSObjectInputStream objectContent = downObjectMeta.getObjectContent();
